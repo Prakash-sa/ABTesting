@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "517851299635",
+    "firebase_url": "https://abtesting-b20ee.firebaseio.com",
+    "project_id": "abtesting-b20ee",
+    "storage_bucket": "abtesting-b20ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517851299635:android:14f5cdd867f39b36f2c846",
+        "android_client_info": {
+          "package_name": "com.company.ab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517851299635-bkcgmpr5e7u0k2nv7fm1n19p3v9vab58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.ab",
+            "certificate_hash": "c386f8d9e45c8f7337749e4ea90c01e052c66617"
+          }
+        },
+        {
+          "client_id": "517851299635-214el4gu89di0rllnq3jda4q4dbneact.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5GRZ971R02Yve0O3kjz2GX1PJm8kNKds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517851299635-214el4gu89di0rllnq3jda4q4dbneact.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
