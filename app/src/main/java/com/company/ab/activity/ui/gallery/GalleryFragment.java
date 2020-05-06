@@ -11,8 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.company.ab.R;
+import com.company.ab.adapter.RecyclerViewCurrentAdapter;
+import com.company.ab.adapter.RecyclerviewResultAdapter;
 import com.company.ab.database.ImageFeatures;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +36,11 @@ public class GalleryFragment extends Fragment  {
 
     private GalleryViewModel galleryViewModel;
 
-    private List<ImageFeatures> list = new ArrayList<>();
+    private RecyclerView recyclerViewCurrentAdapter,recyclerViewResultAdapter;
+    private RecyclerView.Adapter adapter;
+
+    private List<ImageFeatures> currentList = new ArrayList<>();
+    private List<ImageFeatures> resultList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,11 +48,30 @@ public class GalleryFragment extends Fragment  {
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
 
+        recyclerViewCurrentAdapter=root.findViewById(R.id.recyclerview_current);
+        recyclerViewCurrentAdapter.setHasFixedSize(true);
+        recyclerViewCurrentAdapter.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewResultAdapter=root.findViewById(R.id.recyclerview_result);
+        recyclerViewResultAdapter.setHasFixedSize(true);
+        recyclerViewResultAdapter.setLayoutManager(new LinearLayoutManager(getContext()));
         progressDialog = new ProgressDialog(getContext());
 
         // Setting up message in Progress dialog.
-        progressDialog.setMessage("Loading People Name...");
+        progressDialog.setMessage("Loading Survey Name...");
 
+        ImageFeatures imageFeatures=new ImageFeatures("https://image.shutterstock.com/image-photo/large-beautiful-drops-transparent-rain-600w-668593321.jpg",
+                "https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg",
+                "adf",
+                10, "cook","cook2");
+        currentList.add(imageFeatures);
+        adapter = new RecyclerViewCurrentAdapter(getContext(), currentList);
+        recyclerViewCurrentAdapter.setAdapter(adapter);
+
+        resultList.add(imageFeatures);
+        adapter=new RecyclerviewResultAdapter(getContext(),resultList);
+        recyclerViewResultAdapter.setAdapter(adapter);
+
+        /*
         // Showing progress dialog.
         progressDialog.show();
 
@@ -57,10 +84,11 @@ public class GalleryFragment extends Fragment  {
             public void onDataChange(DataSnapshot snapshot) {
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
                     ImageFeatures imageUploadInfo = postSnapshot.getValue(ImageFeatures.class);
                     list.add(imageUploadInfo);
                 }
+                adapter = new RecyclerViewCurrentAdapter(getContext(), list);
+                recyclerViewCurrentAdapter.setAdapter(adapter);
                 progressDialog.dismiss();
             }
 
@@ -71,11 +99,7 @@ public class GalleryFragment extends Fragment  {
             }
         });
 
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });
+         */
         return root;
     }
 

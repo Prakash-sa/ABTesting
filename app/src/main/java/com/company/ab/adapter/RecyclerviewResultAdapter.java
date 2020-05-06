@@ -22,52 +22,53 @@ import com.company.ab.database.ImageFeatures;
 import java.util.List;
 
 public class RecyclerviewResultAdapter extends RecyclerView.Adapter<RecyclerviewResultAdapter.ViewHolder> {
-
-        Context context;
-        List<ImageFeatures> MainStoreImageHelperList;
+    Context context;
+    List<ImageFeatures> MainStoreImageHelperList;
 
     public RecyclerviewResultAdapter(Context context, List<ImageFeatures> TempList) {
 
-    this.MainStoreImageHelperList = TempList;
+        this.MainStoreImageHelperList = TempList;
 
-    this.context = context;
+        this.context = context;
     }
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override
+    public RecyclerviewResultAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
 
-            ViewHolder viewHolder = new ViewHolder(view);
+        RecyclerviewResultAdapter.ViewHolder viewHolder = new RecyclerviewResultAdapter.ViewHolder(view);
 
-            return viewHolder;
-            }
+        return viewHolder;
+    }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-            ImageFeatures UploadInfo = MainStoreImageHelperList.get(position);
+    public void onBindViewHolder(final RecyclerviewResultAdapter.ViewHolder holder, int position) {
+        final ImageFeatures UploadInfo = MainStoreImageHelperList.get(position);
 
-            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-            Intent intent=new Intent(context, ImageViewActivity.class);
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ImageViewActivity.class);
+                intent.putExtra("imageurl1",UploadInfo.getImageurl1());
+                intent.putExtra("imageurl2",UploadInfo.getImageurl2());
 
-            Pair<View, String> p1 = Pair.create((View)holder.imageTextView1, "imageView1");
-            Pair<View, String> p2 = Pair.create((View)holder.imageTextView2, "imageView2");
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation( (Activity) context, p1, p2);
-            context.startActivity(intent,options.toBundle());
+                Pair<View, String> p1 = Pair.create((View)holder.imageTextView1, "imageView1");
+                Pair<View, String> p2 = Pair.create((View)holder.imageTextView2, "imageView2");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation( (Activity) context, p1, p2);
+                context.startActivity(intent,options.toBundle());
             }
-            });
-            holder.imageTextView1.setText(UploadInfo.getImagetext1());
-            holder.imageTextView2.setText(UploadInfo.getImagetext2());
-            Glide.with(context).load(UploadInfo.getImageurl1()).into(holder.imageView1);
-            Glide.with(context).load(UploadInfo.getImageurl2()).into(holder.imageView2);
-            }
+        });
+        holder.imageTextView1.setText(UploadInfo.getImagetext1());
+        holder.imageTextView2.setText(UploadInfo.getImagetext2());
+        Glide.with(context).load(UploadInfo.getImageurl1()).into(holder.imageView1);
+        Glide.with(context).load(UploadInfo.getImageurl2()).into(holder.imageView2);
+    }
 
     @Override
     public int getItemCount() {
-            return MainStoreImageHelperList.size();
-            }
+        return MainStoreImageHelperList.size();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView1,imageView2;

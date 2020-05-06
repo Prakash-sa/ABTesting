@@ -45,12 +45,14 @@ public class RecyclerViewCurrentAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ImageFeatures UploadInfo = MainStoreImageHelperList.get(position);
+        final ImageFeatures UploadInfo = MainStoreImageHelperList.get(position);
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, ImageViewActivity.class);
+                intent.putExtra("imageurl1",UploadInfo.getImageurl1());
+                intent.putExtra("imageurl2",UploadInfo.getImageurl2());
 
                 Pair<View, String> p1 = Pair.create((View)holder.imageTextView1, "imageView1");
                 Pair<View, String> p2 = Pair.create((View)holder.imageTextView2, "imageView2");
