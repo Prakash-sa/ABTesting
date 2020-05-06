@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,14 +12,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.company.ab.R;
+import com.company.ab.activity.ui.gallery.GalleryFragment;
+import com.company.ab.activity.ui.home.HomeFragment;
+import com.company.ab.activity.ui.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shrikanthravi.customnavigationdrawer2.data.MenuItem;
+import com.shrikanthravi.customnavigationdrawer2.widget.SNavigationDrawer;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -37,6 +41,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    private SNavigationDrawer sNavigationDrawer;
+    private Class fragmentClass;
+    private static Fragment fragment;
 
 
     private static final int PERMISSION_ALL=1;
@@ -81,26 +89,92 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
-                .build();
-        View hview=navigationView.getHeaderView(0);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        sNavigationDrawer = findViewById(R.id.navigationDrawer);
 
-        userimage=hview.findViewById(R.id.userimageView);
-        usertext=hview.findViewById(R.id.usernametext);
-        emailtext=hview.findViewById(R.id.emailidtextView);
+        List<MenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem("Home",R.drawable.third));
+        menuItems.add(new MenuItem("Gallery",R.drawable.third));
+        menuItems.add(new MenuItem("Profile",R.drawable.third));
+        menuItems.add(new MenuItem("SignOut",R.drawable.third));
 
-        if(user!=null ){
-            Glide.with(this).load(user.getPhotoUrl()).into(userimage);
-            usertext.setText(user.getDisplayName());
-            emailtext.setText(user.getEmail());
+        sNavigationDrawer.setMenuItemList(menuItems);
+        fragmentClass =  HomeFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, fragment).commit();
+        }
+
+
+        sNavigationDrawer.setOnMenuItemClickListener(new SNavigationDrawer.OnMenuItemClickListener() {
+            @Override
+            public void onMenuItemClicked(int position) {
+                System.out.println("Position "+position);
+
+                switch (position){
+                    case 0:{
+                        fragmentClass = HomeFragment.class;
+                        break;
+                    }
+                    case 1:{
+                        fragmentClass = GalleryFragment.class;
+                        break;
+                    }
+                    case 2:{
+                        fragmentClass = ProfileFragment.class;
+                        break;
+                    }
+                    case 3:{
+                        mAuth.signOut();
+                        startActivity(new Intent(MainActivity.this,LoginAndSignupActivity.class));
+                        finish();
+                    }
+                }
+                sNavigationDrawer.setDrawerListener(new SNavigationDrawer.DrawerListener() {
+
+                    @Override
+                    public void onDrawerOpened() {
+
+                    }
+
+                    @Override
+                    public void onDrawerOpening(){
+
+                    }
+
+                    @Override
+                    public void onDrawerClosing(){
+                        System.out.println("Drawer closed");
+
+                        try {
+                            fragment = (Fragment) fragmentClass.newInstance();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (fragment != null) {
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, fragment).commit();
+
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed() {
+
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+                        System.out.println("State "+newState);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -109,18 +183,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id1=item.getItemId();
-        if(id1==R.id.action_signout){
-            mAuth.signOut();
-            startActivity(new Intent(MainActivity.this,LoginAndSignupActivity.class));
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
