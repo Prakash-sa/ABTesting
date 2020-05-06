@@ -18,26 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.ImageViewActivity" android:parentActivityName=".activity.MainActivity"></activity>
         <activity
-            android:name="com.company.ab.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.company.ab.activity.TermsServiceActivity"
-            android:parentActivityName="com.company.ab.activity.LoginAndSignupActivity"
+            android:name=".activity.TermsServiceActivity"
+            android:parentActivityName=".activity.LoginAndSignupActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.company.ab.activity.SignupActivity"
-            android:parentActivityName="com.company.ab.activity.LoginAndSignupActivity"
+            android:name=".activity.SignupActivity"
+            android:parentActivityName=".activity.LoginAndSignupActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.company.ab.activity.LoginActivity"
-            android:parentActivityName="com.company.ab.activity.SignupActivity"
+            android:name=".activity.LoginActivity"
+            android:parentActivityName=".activity.SignupActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.company.ab.activity.LoginAndSignupActivity"
+            android:name=".activity.LoginAndSignupActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.company.ab.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/NoActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
