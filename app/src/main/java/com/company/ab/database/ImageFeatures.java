@@ -1,24 +1,25 @@
 package com.company.ab.database;
 
-public class ImageFeatures {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ImageFeatures implements Serializable {
     private String imageurl1;
     private String imageurl2;
-    private String imagetext1;
-    private String imagetext2;
-    private String lastdate;
-    private int vote;
+    private String imageDesciption;
+    private int lastdate;
+    private int upVote;
+    private int downVote;
+    private int aVote;
+    private int bVote;
+    private List<String>feedback=new ArrayList<>();
+    private String uuid;
 
     public ImageFeatures() {
     }
 
-    public ImageFeatures(String imageurl1, String imageurl2, String lastdate, int vote, String imagetext1,String imagetext2) {
-        this.imageurl1 = imageurl1;
-        this.imageurl2 = imageurl2;
-        this.lastdate = lastdate;
-        this.vote = vote;
-        this.imagetext1=imagetext1;
-        this.imagetext2=imagetext2;
-    }
+
 
     public String getImageurl1() {
         return imageurl1;
@@ -36,35 +37,68 @@ public class ImageFeatures {
         this.imageurl2 = imageurl2;
     }
 
-    public String getLastdate() {
+    public int getLastdate() {
         return lastdate;
     }
 
-    public void setLastdate(String lastdate) {
+    public void setLastdate(int lastdate) {
         this.lastdate = lastdate;
     }
 
-    public int getVote() {
-        return vote;
+    public String getImageDesciption() {
+        return imageDesciption;
     }
 
-    public void setVote(int vote) {
-        this.vote = vote;
+    public void setImageDesciption(String imageDesciption) {
+        this.imageDesciption = imageDesciption;
     }
 
-    public String getImagetext1() {
-        return imagetext1;
+
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setImagetext1(String imagetext1) {
-        this.imagetext1 = imagetext1;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public String getImagetext2() {
-        return imagetext2;
+    public int getUpVote() {
+        return upVote;
     }
 
-    public void setImagetext2(String imagetext2) {
-        this.imagetext2 = imagetext2;
+    public void setUpVote(int upVote) {
+        this.upVote = upVote;
+    }
+
+    public int getDownVote() {
+        return downVote;
+    }
+
+    public void setDownVote(int downVote) {
+        this.downVote = downVote;
+    }
+
+    public List<String> getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(List<String> feedback) {
+        this.feedback = feedback;
+    }
+
+    public int getaVote() {
+        return aVote;
+    }
+
+    public void setaVote(int aVote) {
+        this.aVote = aVote;
+    }
+
+    public int getbVote() {
+        return bVote;
+    }
+
+    public void setbVote(int bVote) {
+        this.bVote = bVote;
     }
 }

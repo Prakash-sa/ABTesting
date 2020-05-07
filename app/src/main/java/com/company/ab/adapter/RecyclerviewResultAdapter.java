@@ -53,14 +53,13 @@ public class RecyclerviewResultAdapter extends RecyclerView.Adapter<Recyclerview
                 intent.putExtra("imageurl1",UploadInfo.getImageurl1());
                 intent.putExtra("imageurl2",UploadInfo.getImageurl2());
 
-                Pair<View, String> p1 = Pair.create((View)holder.imageTextView1, "imageView1");
-                Pair<View, String> p2 = Pair.create((View)holder.imageTextView2, "imageView2");
+                Pair<View, String> p1 = Pair.create((View)holder.imageView1, "imageView1");
+                Pair<View, String> p2 = Pair.create((View)holder.imageView2, "imageView2");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation( (Activity) context, p1, p2);
                 context.startActivity(intent,options.toBundle());
             }
         });
-        holder.imageTextView1.setText(UploadInfo.getImagetext1());
-        holder.imageTextView2.setText(UploadInfo.getImagetext2());
+        holder.imageDesciptionView1.setText(UploadInfo.getImageDesciption());
         Glide.with(context).load(UploadInfo.getImageurl1()).into(holder.imageView1);
         Glide.with(context).load(UploadInfo.getImageurl2()).into(holder.imageView2);
     }
@@ -72,7 +71,7 @@ public class RecyclerviewResultAdapter extends RecyclerView.Adapter<Recyclerview
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView1,imageView2;
-        public TextView imageTextView1,imageTextView2;
+        public TextView imageDesciptionView1;
         public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
@@ -80,8 +79,7 @@ public class RecyclerviewResultAdapter extends RecyclerView.Adapter<Recyclerview
             linearLayout=itemView.findViewById(R.id.lineraLayout_id);
             imageView1 = (ImageView) itemView.findViewById(R.id.image1_id);
             imageView2 = (ImageView) itemView.findViewById(R.id.image2_id);
-            imageTextView1=itemView.findViewById(R.id.text1_id);
-            imageTextView2=itemView.findViewById(R.id.text2_id);
+            imageDesciptionView1=itemView.findViewById(R.id.image_desciption_id);
         }
     }
 }

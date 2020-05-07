@@ -59,35 +59,24 @@ public class GalleryFragment extends Fragment  {
         // Setting up message in Progress dialog.
         progressDialog.setMessage("Loading Survey Name...");
 
-        ImageFeatures imageFeatures=new ImageFeatures("https://image.shutterstock.com/image-photo/large-beautiful-drops-transparent-rain-600w-668593321.jpg",
-                "https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg",
-                "adf",
-                10, "cook","cook2");
-        currentList.add(imageFeatures);
-        adapter = new RecyclerViewCurrentAdapter(getContext(), currentList);
-        recyclerViewCurrentAdapter.setAdapter(adapter);
 
-        resultList.add(imageFeatures);
-        adapter=new RecyclerviewResultAdapter(getContext(),resultList);
-        recyclerViewResultAdapter.setAdapter(adapter);
 
-        /*
-        // Showing progress dialog.
+
+
         progressDialog.show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("admin/");
-        databaseReference=databaseReference.child("watchman");
+        databaseReference = FirebaseDatabase.getInstance().getReference("");
 
         // Adding Add Value Event Listener to databaseReference.
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child("current").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
+                currentList.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     ImageFeatures imageUploadInfo = postSnapshot.getValue(ImageFeatures.class);
-                    list.add(imageUploadInfo);
+                    currentList.add(imageUploadInfo);
                 }
-                adapter = new RecyclerViewCurrentAdapter(getContext(), list);
+                adapter = new RecyclerViewCurrentAdapter(getContext(), currentList);
                 recyclerViewCurrentAdapter.setAdapter(adapter);
                 progressDialog.dismiss();
             }
@@ -99,7 +88,28 @@ public class GalleryFragment extends Fragment  {
             }
         });
 
-         */
+        databaseReference.child("result").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                resultList.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    ImageFeatures imageUploadInfo = postSnapshot.getValue(ImageFeatures.class);
+                    resultList.add(imageUploadInfo);
+                }
+                adapter=new RecyclerviewResultAdapter(getContext(),resultList);
+                recyclerViewResultAdapter.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
+
+            }
+        });
+
+
         return root;
     }
 

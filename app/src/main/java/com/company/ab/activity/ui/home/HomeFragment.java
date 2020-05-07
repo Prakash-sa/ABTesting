@@ -3,6 +3,7 @@ package com.company.ab.activity.ui.home;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -41,15 +44,16 @@ public class HomeFragment extends Fragment {
     private DatabaseReference myDatabaseRef = database.getReference("current/");
 
     private ImageView imageView1,imageView2;
-    private EditText editText1,editText2;
-    private Button submit_bt;
+    private EditText desciptionEditText1;
+    private Button submit_bt,image1_bt,image2_bt;
     private ProgressBar progressBar;
 
     private Uri filePath1,filePath2;
     private String fileStoragePath1,fileStoragePath2;
     private boolean image1Request;
 
-    private static final int PICK_FROM_GALLARY = 2;
+    private static final int PICK_FROM_GALLARY1 = 2;
+    private static final int PICK_FROM_GALLARY2 = 3;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,26 +63,39 @@ public class HomeFragment extends Fragment {
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         progressBar=root.findViewById(R.id.progress_bar);
-        imageView1=root.findViewById(R.id.image1_id);
-        imageView2=root.findViewById(R.id.image2_id);
-        editText1=root.findViewById(R.id.text1_id);
-        editText2=root.findViewById(R.id.text2_id);
+        imageView1=root.findViewById(R.id.selectimage1_id);
+        imageView2=root.findViewById(R.id.selectimage2_id);
+        desciptionEditText1=root.findViewById(R.id.imageedit_desciption_id);
         submit_bt=root.findViewById(R.id.submit_bt_id);
+        image1_bt=root.findViewById(R.id.image1_bt_id);
+        image2_bt=root.findViewById(R.id.image2_bt_id);
 
         image1Request=false;
+
+        image1_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image1Request=true;
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLARY1);
+            }
+        });
+        image2_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image1Request=false;
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLARY2);
+            }
+        });
 
 
         submit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title1=editText1.getText().toString();
-                String title2=editText2.getText().toString();
+                String title1=desciptionEditText1.getText().toString();
                 if(title1.isEmpty()){
-                    editText1.setError("Please Enter Name");
-                    return;
-                }
-                if(title2.isEmpty()){
-                    editText2.setError("Please Enter Name");
+                    desciptionEditText1.setError("Please Enter Desciption");
                     return;
                 }
                 if(filePath1==null || filePath2==null){
@@ -97,16 +114,15 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ( resultCode == RESULT_OK) {
-
-            if(requestCode==PICK_FROM_GALLARY) {
-                if(image1Request){
-                    filePath1 = data.getData();
-                    imageView1.setImageURI(filePath1);
-                }
-                else {
-                    filePath2 = data.getData();
-                    imageView2.setImageURI(filePath2);
-                }
+            if(requestCode==PICK_FROM_GALLARY1) {
+                filePath1 = data.getData();
+                Log.i("uri",filePath1.toString());
+                imageView1.setImageURI(filePath1);
+            }
+            if(requestCode==PICK_FROM_GALLARY2){
+                filePath2 = data.getData();
+                Log.i("uri",filePath2.toString());
+                imageView2.setImageURI(filePath2);
             }
 
         }
@@ -153,8 +169,11 @@ public class HomeFragment extends Fragment {
                     tmpStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            progressBar.setVisibility(View.INVISIBLE);
                             fileStoragePath2=uri.toString();
-                            myDatabaseRef.child(UUID.randomUUID().toString()).setValue(getImageProperties());
+                            String ranuuid=UUID.randomUUID().toString();
+                            myDatabaseRef.child(ranuuid).setValue(getImageProperties(ranuuid));
+                            Toast.makeText(getContext(),"Testing is uploaded",Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -162,6 +181,7 @@ public class HomeFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(),"Cannot Upload Image",Toast.LENGTH_LONG).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -172,14 +192,20 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private ImageFeatures getImageProperties(){
+    private ImageFeatures getImageProperties(String uuid){
         ImageFeatures imageFeatures=new ImageFeatures();
-        imageFeatures.setImagetext1(editText1.getText().toString());
-        imageFeatures.setImagetext2(editText2.getText().toString());
+        imageFeatures.setImageDesciption(desciptionEditText1.getText().toString());
         imageFeatures.setImageurl1(fileStoragePath1);
         imageFeatures.setImageurl2(fileStoragePath2);
-        imageFeatures.setLastdate("20020");
-        imageFeatures.setVote(0);
+        imageFeatures.setLastdate(20);
+        imageFeatures.setUpVote(0);
+        imageFeatures.setDownVote(0);
+        imageFeatures.setUuid(uuid);
+        imageFeatures.setaVote(0);
+        imageFeatures.setbVote(0);
+
+        List<String> list=new ArrayList<>();
+        imageFeatures.setFeedback(list);
         return imageFeatures;
     }
 
