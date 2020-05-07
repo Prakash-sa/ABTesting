@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.company.ab.R;
-import com.company.ab.activity.ui.profile.ProfileFragment;
 import com.company.ab.database.ImageFeatures;
 import com.company.ab.database.ProfileFeatures;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,8 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class ImageViewActivity extends AppCompatActivity {
 

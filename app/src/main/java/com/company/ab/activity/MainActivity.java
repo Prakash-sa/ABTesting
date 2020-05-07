@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.company.ab.R;
 import com.company.ab.activity.ui.gallery.GalleryFragment;
 import com.company.ab.activity.ui.home.HomeFragment;
-import com.company.ab.activity.ui.profile.ProfileFragment;
+import com.company.ab.activity.ui.leaderboard.LeaderBoardFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem("Home",R.drawable.third));
         menuItems.add(new MenuItem("Gallery",R.drawable.third));
-        menuItems.add(new MenuItem("Profile",R.drawable.third));
+        menuItems.add(new MenuItem("LeaderBoard",R.drawable.third));
         menuItems.add(new MenuItem("SignOut",R.drawable.third));
 
         sNavigationDrawer.setMenuItemList(menuItems);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case 2:{
-                        fragmentClass = ProfileFragment.class;
+                        fragmentClass = LeaderBoardFragment.class;
                         break;
                     }
                     case 3:{

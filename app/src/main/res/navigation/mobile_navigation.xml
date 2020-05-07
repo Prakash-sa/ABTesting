@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.company.ab.activity.ui.profile.ProfileFragment"
+        android:name="com.company.ab.activity.ui.leaderboard.LeaderBoardFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_leaderboard" />
 
     <fragment
         android:id="@+id/nav_slideshow"
