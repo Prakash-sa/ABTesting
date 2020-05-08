@@ -82,6 +82,7 @@ public class GalleryFragment extends Fragment  {
                     int lastDate=imageUploadInfo.getLastdate();
                     if(lastDate<currentDate){
                         databaseReference.child("result").child(imageUploadInfo.getUuid()).setValue(imageUploadInfo);
+                        databaseReference.child("current").child(imageUploadInfo.getUuid()).removeValue();
                     }
                     else
                     currentList.add(imageUploadInfo);
