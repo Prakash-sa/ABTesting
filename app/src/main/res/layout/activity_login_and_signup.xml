@@ -61,6 +61,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +81,7 @@
             android:drawableLeft="@drawable/googlelogo"
             android:text="Continue with Google"/>
         </androidx.cardview.widget.CardView>
+        <!--
         <androidx.cardview.widget.CardView
             android:paddingLeft="5dp"
             android:layout_margin="10dp"
@@ -96,11 +98,13 @@
             android:drawableLeft="@drawable/emailogo"
             android:text="Continue with Email"/>
         </androidx.cardview.widget.CardView>
+
+        -->
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"

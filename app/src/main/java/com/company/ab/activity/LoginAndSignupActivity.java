@@ -43,7 +43,7 @@ public class LoginAndSignupActivity extends AppCompatActivity {
         privacybt=findViewById(R.id.privacybtid);
         contentbt=findViewById(R.id.contentbtid);
         googlebt=findViewById(R.id.googlesigupid);
-        emailbt=findViewById(R.id.emailid);
+      //  emailbt=findViewById(R.id.emailid);
         skipbt=findViewById(R.id.skipid);
 
         skipbt.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +55,7 @@ public class LoginAndSignupActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
+/*
         emailbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +63,8 @@ public class LoginAndSignupActivity extends AppCompatActivity {
             }
         });
 
+
+ */
         termsbt.setPaintFlags(termsbt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         privacybt.setPaintFlags(privacybt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         contentbt.setPaintFlags(contentbt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
