@@ -4,10 +4,20 @@
     <color name="colorPrimary">#3C40C6</color>
     <color name="colorPrimaryDark">#30336B</color>
     <color name="colorAccent">#0A79DF</color>
-
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="textcolor">#E55B3C</color>
     <color name="appbar"></color>
     <color name="textview_back">#F7C09C</color>
+    <color name="text700">#000000</color>
+    <color name="text600">#23263D</color>
+    <color name="text400">#5A5A5A</color>
+    <color name="text100">#CCCCCC</color>
+    <color name="text50">#707070</color>
+    <color name="background_white">#FFFFFF</color>
+    <color name="background_transparent_black">#40000000</color>
+    <color name="background_transparent">#00FFFFFF</color>
+    <color name="background_green">#3E8D41</color>
+    <color name="background_progress_dialog">#00000000</color>
+    <color name="background_trans">#00FFFFFF</color>
 </resources>

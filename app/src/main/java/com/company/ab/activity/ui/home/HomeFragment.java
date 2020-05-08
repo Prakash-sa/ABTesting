@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.company.ab.R;
 import com.company.ab.activity.CalendarActivity;
 import com.company.ab.database.ImageFeatures;
+import com.company.ab.views.RoundedIconButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,7 +48,7 @@ public class HomeFragment extends Fragment {
 
     private ImageView imageView1,imageView2;
     private EditText desciptionEditText1;
-    private Button submit_bt,image1_bt,image2_bt,calendar_bt;
+    private RoundedIconButton calendar_bt,image1_bt,image2_bt,submit_bt;
     private ProgressBar progressBar;
     private TextView lastDateTextView;
 
@@ -72,9 +73,13 @@ public class HomeFragment extends Fragment {
         imageView2=root.findViewById(R.id.selectimage2_id);
         desciptionEditText1=root.findViewById(R.id.imageedit_desciption_id);
         submit_bt=root.findViewById(R.id.submit_bt_id);
+        submit_bt.setButtonLabel("Submit");
         image1_bt=root.findViewById(R.id.image1_bt_id);
+        image1_bt.setButtonLabel("Version 1");
         image2_bt=root.findViewById(R.id.image2_bt_id);
+        image2_bt.setButtonLabel("Version 2");
         calendar_bt=root.findViewById(R.id.calendar_bt_id);
+        calendar_bt.setButtonLabel("Enter Last Date");
         lastDateTextView=root.findViewById(R.id.date_id);
         image1Request=false;
 
@@ -82,6 +87,7 @@ public class HomeFragment extends Fragment {
         if(lastdatestring!=null){
             last_date=getActivity().getIntent().getIntExtra("intdate",-1);
             lastDateTextView.setText(lastdatestring);
+            lastDateTextView.setVisibility(View.VISIBLE);
         }
 
         image1_bt.setOnClickListener(new View.OnClickListener() {

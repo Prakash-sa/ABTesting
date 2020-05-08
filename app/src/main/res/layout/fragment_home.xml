@@ -4,109 +4,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".activity.ui.home.HomeFragment">
 
-    <LinearLayout
-        android:gravity="center"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <androidx.cardview.widget.CardView
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="5dp"
-            android:fadingEdgeLength="5dp"
-            app:cardCornerRadius="10dp">
-            <Button
-                android:id="@+id/calendar_bt_id"
-                android:background="@color/colorAccent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Last Date"
-                />
-        </androidx.cardview.widget.CardView>
+        android:layout_marginLeft="7dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/senbold"
+        android:text="General"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:text="yyyy/mm/dd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/date_id"/>
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/senbold"
+        android:text="Campaign Profile"
+        android:textSize="16sp" />
 
+    <EditText
+        android:id="@+id/imageedit_desciption_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Description"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/senbold"
+        android:text="Variants"
+        android:textSize="16sp" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        >
+        android:weightSum="2">
+
         <LinearLayout
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                app:srcCompat="@android:drawable/alert_dark_frame"
-                android:layout_marginBottom="10dp"
+                android:id="@+id/selectimage1_id"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:id="@+id/selectimage1_id"/>
-            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@android:drawable/alert_dark_frame" />
+
+
+            <com.company.ab.views.RoundedIconButton
+                android:id="@+id/image1_bt_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="5dp"
-                android:fadingEdgeLength="5dp"
-                app:cardCornerRadius="10dp">
-                <Button
-                    android:id="@+id/image1_bt_id"
-                    android:background="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select"
-                    />
-            </androidx.cardview.widget.CardView>
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:paddingBottom="18dp"
+                app:font="@font/senregular"
+                app:textColor="@color/black" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                app:srcCompat="@android:drawable/alert_dark_frame"
-                android:layout_marginBottom="10dp"
+                android:id="@+id/selectimage2_id"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:id="@+id/selectimage2_id"/>
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@android:drawable/alert_dark_frame" />
 
-
-            <androidx.cardview.widget.CardView
+            <com.company.ab.views.RoundedIconButton
+                android:id="@+id/image2_bt_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="5dp"
-                android:fadingEdgeLength="5dp"
-                app:cardCornerRadius="10dp">
-                <Button
-                    android:id="@+id/image2_bt_id"
-                    android:background="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select"
-                    />
-            </androidx.cardview.widget.CardView>
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:paddingBottom="18dp"
+                app:font="@font/senregular"
+                app:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -114,37 +113,73 @@
     </LinearLayout>
 
     <ProgressBar
-        android:visibility="invisible"
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progress_bar"/>
+        android:visibility="invisible" />
 
-
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:id="@+id/imageedit_desciption_id"/>
-
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        android:fadingEdgeLength="5dp"
-        app:cardCornerRadius="10dp">
-        <Button
-            android:id="@+id/submit_bt_id"
-            android:background="@color/colorAccent"
-            android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/senbold"
+        android:text="End Date"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <com.company.ab.views.RoundedIconButton
+            android:id="@+id/calendar_bt_id"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            />
-    </androidx.cardview.widget.CardView>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:paddingBottom="18dp"
+            app:font="@font/senregular"
+            app:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/date_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/senregular"
+            android:gravity="center"
+            android:text="--/--/--"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:fadingEdgeLength="5dp">
+
+        <com.company.ab.views.RoundedIconButton
+            android:id="@+id/submit_bt_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:paddingBottom="18dp"
+            app:font="@font/senregular"
+            app:textColor="@color/black" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
