@@ -81,7 +81,6 @@ public class LeaderBoardFragment extends Fragment {
     private void addListView(){
         listData.clear();
         for(int i=0;i<participants.size();i++){
-            Log.i("partic",participants.get(i).second);
             listData.add(new ListData(participants.get(i).second,participants.get(i).first,i+1));
         }
         if(listData.size()==0)return;

@@ -7,51 +7,71 @@
     android:orientation="vertical"
     tools:context=".activity.ResultImageActivity">
 
+    <TextView
+        android:layout_marginTop="50dp"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:id="@+id/result_flag_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You Have Already Submitted"
+        android:gravity="center"/>
     <LinearLayout
         android:gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/lineraLayout1_id"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:transitionName="imageView1"
-                app:srcCompat="@android:drawable/alert_dark_frame"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:id="@+id/image_button1_id"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="image1"
-                android:id="@+id/textview1_id"/>
-        </LinearLayout>
-
-
-
 
         <LinearLayout
-            android:id="@+id/lineraLayout2_id"
-            android:layout_marginLeft="20dp"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:transitionName="imageView2"
-                app:srcCompat="@android:drawable/alert_dark_frame"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:id="@+id/image_button2_id"/>
+            android:layout_height="400dp">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/lineraLayout1_id"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:transitionName="imageView1"
+                        app:srcCompat="@android:drawable/alert_dark_frame"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:id="@+id/image_button1_id"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/lineraLayout2_id"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:transitionName="imageView2"
+                        app:srcCompat="@android:drawable/alert_dark_frame"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:id="@+id/image_button2_id"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
+                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="image1"
-                android:id="@+id/textview2_id"/>
+                android:text="Description"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:id="@+id/image_decription_text_id"/>
 
         </LinearLayout>
 

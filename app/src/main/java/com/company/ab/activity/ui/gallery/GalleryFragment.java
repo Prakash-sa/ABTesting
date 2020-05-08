@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -35,6 +36,8 @@ public class GalleryFragment extends Fragment  {
     private ProgressDialog progressDialog;
 
     private GalleryViewModel galleryViewModel;
+
+    private int currentDate;
 
     private RecyclerView recyclerViewCurrentAdapter,recyclerViewResultAdapter;
     private RecyclerView.Adapter adapter;
@@ -56,6 +59,8 @@ public class GalleryFragment extends Fragment  {
         recyclerViewResultAdapter.setLayoutManager(new LinearLayoutManager(getContext()));
         progressDialog = new ProgressDialog(getContext());
 
+        Calendar calendar=Calendar.getInstance();
+        currentDate= calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)*10000+calendar.get(Calendar.DATE)*1000000;
         // Setting up message in Progress dialog.
         progressDialog.setMessage("Loading Survey Name...");
 
@@ -74,6 +79,11 @@ public class GalleryFragment extends Fragment  {
                 currentList.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     ImageFeatures imageUploadInfo = postSnapshot.getValue(ImageFeatures.class);
+                    int lastDate=imageUploadInfo.getLastdate();
+                    if(lastDate<currentDate){
+                        databaseReference.child("result").child(imageUploadInfo.getUuid()).setValue(imageUploadInfo);
+                    }
+                    else
                     currentList.add(imageUploadInfo);
                 }
                 adapter = new RecyclerViewCurrentAdapter(getContext(), currentList);

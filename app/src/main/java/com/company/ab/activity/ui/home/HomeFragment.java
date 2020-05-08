@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.company.ab.R;
+import com.company.ab.activity.CalendarActivity;
 import com.company.ab.database.ImageFeatures;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,8 +47,11 @@ public class HomeFragment extends Fragment {
 
     private ImageView imageView1,imageView2;
     private EditText desciptionEditText1;
-    private Button submit_bt,image1_bt,image2_bt;
+    private Button submit_bt,image1_bt,image2_bt,calendar_bt;
     private ProgressBar progressBar;
+    private TextView lastDateTextView;
+
+    private int last_date=-1;
 
     private Uri filePath1,filePath2;
     private String fileStoragePath1,fileStoragePath2;
@@ -69,8 +74,15 @@ public class HomeFragment extends Fragment {
         submit_bt=root.findViewById(R.id.submit_bt_id);
         image1_bt=root.findViewById(R.id.image1_bt_id);
         image2_bt=root.findViewById(R.id.image2_bt_id);
-
+        calendar_bt=root.findViewById(R.id.calendar_bt_id);
+        lastDateTextView=root.findViewById(R.id.date_id);
         image1Request=false;
+
+        String lastdatestring=getActivity().getIntent().getStringExtra("date");
+        if(lastdatestring!=null){
+            last_date=getActivity().getIntent().getIntExtra("intdate",-1);
+            lastDateTextView.setText(lastdatestring);
+        }
 
         image1_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +101,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        calendar_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), CalendarActivity.class));
+            }
+        });
+
 
         submit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +119,11 @@ public class HomeFragment extends Fragment {
                 }
                 if(filePath1==null || filePath2==null){
                     Toast.makeText(getContext(),"Please Select image",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(last_date==-1){
+                    Toast.makeText(getContext(),"Please Specify Date",Toast.LENGTH_LONG).show();
                     return;
                 }
                 uploadImage1();
@@ -197,7 +221,7 @@ public class HomeFragment extends Fragment {
         imageFeatures.setImageDesciption(desciptionEditText1.getText().toString());
         imageFeatures.setImageurl1(fileStoragePath1);
         imageFeatures.setImageurl2(fileStoragePath2);
-        imageFeatures.setLastdate(20);
+        imageFeatures.setLastdate(last_date);
         imageFeatures.setUpVote(0);
         imageFeatures.setDownVote(0);
         imageFeatures.setUuid(uuid);

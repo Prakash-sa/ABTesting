@@ -3,6 +3,7 @@ package com.company.ab.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.company.ab.R;
 import com.company.ab.activity.ImageViewActivity;
+import com.company.ab.activity.ResultImageActivity;
 import com.company.ab.database.ImageFeatures;
 
 import java.util.List;
@@ -49,10 +51,10 @@ public class RecyclerviewResultAdapter extends RecyclerView.Adapter<Recyclerview
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, ImageViewActivity.class);
-                intent.putExtra("imageurl1",UploadInfo.getImageurl1());
-                intent.putExtra("imageurl2",UploadInfo.getImageurl2());
-
+                Intent intent=new Intent(context, ResultImageActivity.class);
+                Bundle b=new Bundle();
+                b.putSerializable("object",UploadInfo);
+                intent.putExtras(b);
                 Pair<View, String> p1 = Pair.create((View)holder.imageView1, "imageView1");
                 Pair<View, String> p2 = Pair.create((View)holder.imageView2, "imageView2");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation( (Activity) context, p1, p2);
