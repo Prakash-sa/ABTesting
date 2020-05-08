@@ -59,7 +59,7 @@ public class CustomAdapter implements ListAdapter {
             convertView=layoutInflater.inflate(R.layout.list_row, null);
             TextView name=convertView.findViewById(R.id.user_name_id);
             TextView coins=convertView.findViewById(R.id.coins_text_id);
-            name.setText(subjectData.getName());
+            name.setText(subjectData.getRank()+".  "+subjectData.getName());
             coins.setText(subjectData.getCoins() +"");
         }
         return convertView;
