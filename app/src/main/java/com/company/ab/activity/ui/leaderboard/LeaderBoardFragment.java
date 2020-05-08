@@ -1,15 +1,15 @@
 package com.company.ab.activity.ui.leaderboard;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -60,6 +61,7 @@ public class LeaderBoardFragment extends Fragment {
 
     private void getFromFirebase() {
         myRef.child("users").addValueEventListener(new ValueEventListener(){
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 participants.clear();
@@ -67,7 +69,20 @@ public class LeaderBoardFragment extends Fragment {
                     ProfileFeatures tmp=dataSnapshot1.getValue(ProfileFeatures.class);
                     participants.add(new Pair<Integer, String>(tmp.getCoins(),tmp.getEmail()));
                 }
-                Collections.sort(participants,Collections.<Pair<Integer, String>>reverseOrder());
+                participants.sort(new Comparator<Pair<Integer, String>>() {
+                    @Override
+                    public int compare(Pair<Integer, String> o1, Pair<Integer, String> o2) {
+                        if (o1.first > o2.first) {
+                            return -1;
+                        } else if (o1.first.equals(o2.first)) {
+                            return 0; // You can change this to make it then look at the
+                            //words alphabetical order
+                        } else {
+                            return 1;
+                        }
+                    }
+                });
+
                 addListView();
             }
 
