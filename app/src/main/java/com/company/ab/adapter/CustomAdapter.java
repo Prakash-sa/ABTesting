@@ -60,7 +60,7 @@ public class CustomAdapter implements ListAdapter {
             TextView name=convertView.findViewById(R.id.user_name_id);
             TextView coins=convertView.findViewById(R.id.coins_text_id);
             name.setText(subjectData.getName());
-//            coins.setText(subjectData.getCoins());
+            coins.setText(subjectData.getCoins() +"");
         }
         return convertView;
     }

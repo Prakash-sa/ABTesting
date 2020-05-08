@@ -39,8 +39,8 @@ public class LeaderBoardFragment extends Fragment {
     private LeaderBoardViewModel leaderBoardViewModel;
 
     private ListView listView;
-    private ArrayList<ListData>listData;
-    private List<Pair<Integer,String>>participants=new ArrayList<>();
+    private ArrayList<ListData>listData=new ArrayList<>();
+    private List<Pair<Integer,String>>participants=new ArrayList<Pair<Integer,String>>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,10 +62,10 @@ public class LeaderBoardFragment extends Fragment {
         myRef.child("users").addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                participants.clear();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
                     ProfileFeatures tmp=dataSnapshot1.getValue(ProfileFeatures.class);
-                    Log.i("users",tmp.getEmail());
-                    participants.add(new Pair<Integer, String>(tmp.getCoins(),tmp.getName()));
+                    participants.add(new Pair<Integer, String>(tmp.getCoins(),tmp.getEmail()));
                 }
                 Collections.sort(participants,Collections.<Pair<Integer, String>>reverseOrder());
                 addListView();
@@ -79,8 +79,9 @@ public class LeaderBoardFragment extends Fragment {
     }
 
     private void addListView(){
-        listData=new ArrayList<>();
+        listData.clear();
         for(int i=0;i<participants.size();i++){
+            Log.i("partic",participants.get(i).second);
             listData.add(new ListData(participants.get(i).second,participants.get(i).first));
         }
         if(listData.size()==0)return;
