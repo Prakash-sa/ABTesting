@@ -1,6 +1,7 @@
 package com.company.ab.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -36,11 +37,15 @@ public class ResultImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_image);
-        /*imageView1=findViewById(R.id.image_button1_id);
-        imageView2=findViewById(R.id.image_button2_id);
-        resultTextView=findViewById(R.id.result_flag_id);*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        Bundle bundle= getIntent().getExtras();
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+            Bundle bundle= getIntent().getExtras();
         imageFeatures = (ImageFeatures) bundle.getSerializable("object");
         imageDescription = findViewById(R.id.image_description_text_id);
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
@@ -83,4 +88,5 @@ public class ResultImageActivity extends AppCompatActivity {
         anyChartView.setChart(pie);
         imageDescription.setText(imageFeatures.getImageDesciption());
     }
+
 }
