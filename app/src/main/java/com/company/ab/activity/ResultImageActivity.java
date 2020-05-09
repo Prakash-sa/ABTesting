@@ -2,12 +2,17 @@ package com.company.ab.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +27,7 @@ import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 import com.bumptech.glide.Glide;
 import com.company.ab.R;
+import com.company.ab.adapter.FeedbackAdapter;
 import com.company.ab.database.ImageFeatures;
 
 import java.util.ArrayList;
@@ -31,14 +37,12 @@ public class ResultImageActivity extends AppCompatActivity {
 
     private ImageFeatures imageFeatures;
     private ImageView imageView1, imageView2;
-    private TextView imageDescription;
+    private TextView imageDescription,feedbackTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_image);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
@@ -48,6 +52,7 @@ public class ResultImageActivity extends AppCompatActivity {
             Bundle bundle= getIntent().getExtras();
         imageFeatures = (ImageFeatures) bundle.getSerializable("object");
         imageDescription = findViewById(R.id.image_description_text_id);
+        feedbackTextView=findViewById(R.id.feedback_text_id);
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         anyChartView.setProgressBar(findViewById(R.id.progress_bar));
         Pie pie = AnyChart.pie();
@@ -87,6 +92,18 @@ public class ResultImageActivity extends AppCompatActivity {
 
         anyChartView.setChart(pie);
         imageDescription.setText(imageFeatures.getImageDesciption());
+        feedbackTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), FeedbackActivity.class);
+                Bundle b=new Bundle();
+                b.putSerializable("object",imageFeatures);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        Log.i("length is",imageFeatures.getFeedback().size()+"");
+
     }
 
 }

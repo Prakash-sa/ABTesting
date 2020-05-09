@@ -10,14 +10,14 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.company.ab.R;
-import com.company.ab.database.ListData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FeedbackAdapter implements ListAdapter {
-    ArrayList<ListData> arrayList;
+    List<String> arrayList;
     Context context;
-    public FeedbackAdapter(Context context, ArrayList<ListData> arrayList) {
+    public FeedbackAdapter(Context context, List<String> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
@@ -53,12 +53,12 @@ public class FeedbackAdapter implements ListAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ListData subjectData=arrayList.get(position);
+        String subjectData=arrayList.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView=layoutInflater.inflate(R.layout.list_feedback, null);
             TextView name=convertView.findViewById(R.id.user_name_id);
-            name.setText(subjectData.getRank()+".  "+subjectData.getName());
+            name.setText(subjectData);
         }
         return convertView;
     }

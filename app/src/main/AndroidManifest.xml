@@ -17,12 +17,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.CalendarActivity"></activity>
-        <activity android:name=".activity.ResultImageActivity"
-            android:parentActivityName=".activity.MainActivity"
-            />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.FeedbackActivity"></activity>
+        <activity android:name=".activity.CalendarActivity" />
+        <activity android:name=".activity.ResultImageActivity" />
         <activity
             android:name=".activity.ImageViewActivity"
             android:parentActivityName=".activity.MainActivity" />
