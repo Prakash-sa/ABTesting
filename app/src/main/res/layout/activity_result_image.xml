@@ -1,81 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.ResultImageActivity">
+    android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="50dp"
-        android:textSize="30dp"
-        android:textColor="@color/black"
-        android:id="@+id/result_flag_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You Have Already Submitted"
-        android:gravity="center"/>
-    <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/senbold"
+        android:gravity="center_horizontal"
+        android:text="Analytics"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
+
+    <com.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="450dp"
+        android:backgroundTint="@color/textcolor"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="400dp">
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/lineraLayout1_id"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:transitionName="imageView1"
-                        app:srcCompat="@android:drawable/alert_dark_frame"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:id="@+id/image_button1_id"/>
-                </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:id="@+id/lineraLayout2_id"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:transitionName="imageView2"
-                        app:srcCompat="@android:drawable/alert_dark_frame"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:id="@+id/image_button2_id"/>
-                </LinearLayout>
+    <TextView
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/senbold"
+        android:text="Campaign Description"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
 
-            </LinearLayout>
-
-            <TextView
-                android:layout_marginTop="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:id="@+id/image_decription_text_id"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    <TextView
+        android:gravity="center"
+        android:id="@+id/image_description_text_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/senregular"
+        android:text="Description"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 </LinearLayout>
