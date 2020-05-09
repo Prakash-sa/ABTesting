@@ -19,6 +19,7 @@ import com.company.ab.R;
 import com.company.ab.constants.Constants;
 import com.company.ab.database.ImageFeatures;
 import com.company.ab.database.ProfileFeatures;
+import com.company.ab.views.RoundedIconButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,9 +52,10 @@ public class ImageViewActivity extends AppCompatActivity {
     List<String>submittedUuid=new ArrayList<>();
     private ImageView imageView1,imageView2;
     private LinearLayout linearLayout1,linearLayout2;
-    private TextView submit_text,imageDesciption;
+    private TextView imageDesciption;
     private ProfileFeatures profileFeatures;
-    private ImageButton upVotebt,downVotebt,submitbt;
+    private RoundedIconButton submitbt;
+    private ImageButton upVotebt,downVotebt;
     private EditText feedbackedittext;
     private TextView upvoteTextView,downVoteTextView;
 
@@ -70,9 +72,6 @@ public class ImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
-
-
-        submit_text=findViewById(R.id.submit_flag_id);
         imageView1=findViewById(R.id.image_button1_id);
         imageView2=findViewById(R.id.image_button2_id);
         linearLayout1=findViewById(R.id.lineraLayout1_id);
@@ -81,21 +80,18 @@ public class ImageViewActivity extends AppCompatActivity {
         upVotebt=findViewById(R.id.upvote_id);
         downVotebt=findViewById(R.id.downvote_id);
         submitbt=findViewById(R.id.submit_bt_id);
+        submitbt.setButtonLabel("Submit");
         feedbackedittext=findViewById(R.id.feedback_id);
         upvoteTextView=findViewById(R.id.text_up_id);
         downVoteTextView=findViewById(R.id.text_down_id);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         isAble=true;
         selected=0;
-
-
         Bundle b=getIntent().getExtras();
         imageFeatures= (ImageFeatures) b.getSerializable("object");
 
         uuid=imageFeatures.getUuid();
-        submit_text.setVisibility(View.INVISIBLE);
         Glide.with(this).load(imageFeatures.getImageurl1()).into(imageView1);
         Glide.with(this).load(imageFeatures.getImageurl2()).into(imageView2);
         imageDesciption.setText(imageFeatures.getImageDesciption());
@@ -113,7 +109,6 @@ public class ImageViewActivity extends AppCompatActivity {
 
                     if (submittedUuid.contains(uuid)) {
                         isAble = false;
-                        submit_text.setVisibility(View.VISIBLE);
                         return;
                     }
                 }

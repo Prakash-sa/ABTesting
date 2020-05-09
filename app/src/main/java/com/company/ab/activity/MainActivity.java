@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
 
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem("Dashboard", R.drawable.third));
-        menuItems.add(new MenuItem("Home",R.drawable.third));
-        menuItems.add(new MenuItem("Gallery",R.drawable.third));
-        menuItems.add(new MenuItem("LeaderBoard",R.drawable.third));
-        menuItems.add(new MenuItem("SignOut",R.drawable.third));
+        menuItems.add(new MenuItem("Campaign",R.drawable.third));
+        menuItems.add(new MenuItem("Global",R.drawable.third));
+        menuItems.add(new MenuItem("Leaderboard",R.drawable.third));
+        menuItems.add(new MenuItem("Sign Out",R.drawable.third));
 
         sNavigationDrawer.setMenuItemList(menuItems);
         fragmentClass =  DashBoardFragment.class;

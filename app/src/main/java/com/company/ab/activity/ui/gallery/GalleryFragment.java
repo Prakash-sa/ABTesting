@@ -64,10 +64,6 @@ public class GalleryFragment extends Fragment  {
         // Setting up message in Progress dialog.
         progressDialog.setMessage("Loading Survey Name...");
 
-
-
-
-
         progressDialog.show();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("");
