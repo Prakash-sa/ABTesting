@@ -2,6 +2,8 @@ package com.company.ab.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.company.ab.R;
+import com.company.ab.constants.Constants;
 import com.company.ab.database.ImageFeatures;
 import com.company.ab.database.ProfileFeatures;
 import com.company.ab.views.RoundedIconButton;
@@ -25,6 +28,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +57,13 @@ public class ImageViewActivity extends AppCompatActivity {
     private RoundedIconButton submitbt;
     private ImageButton upVotebt,downVotebt;
     private EditText feedbackedittext;
+    private TextView upvoteTextView,downVoteTextView;
 
     private int vote=0;
 
     private ImageFeatures imageFeatures;
+
+    private ProgressDialog progressDialog;
 
     private String uuid;
     private int selected=-1;
@@ -64,6 +82,8 @@ public class ImageViewActivity extends AppCompatActivity {
         submitbt=findViewById(R.id.submit_bt_id);
         submitbt.setButtonLabel("Submit");
         feedbackedittext=findViewById(R.id.feedback_id);
+        upvoteTextView=findViewById(R.id.text_up_id);
+        downVoteTextView=findViewById(R.id.text_down_id);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         isAble=true;
@@ -76,6 +96,8 @@ public class ImageViewActivity extends AppCompatActivity {
         Glide.with(this).load(imageFeatures.getImageurl2()).into(imageView2);
         imageDesciption.setText(imageFeatures.getImageDesciption());
 
+        upvoteTextView.setText(imageFeatures.getUpVote() +"");
+        downVoteTextView.setText(imageFeatures.getDownVote()+"");
 
         myDatabaseRef.child("users").child(user.getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,6 +125,7 @@ public class ImageViewActivity extends AppCompatActivity {
                 upVotebt.setClickable(false);
                 downVotebt.setClickable(true);
                 vote=1;
+                upvoteTextView.setText(imageFeatures.getUpVote()+1+"");
             }
         });
 
@@ -112,6 +135,7 @@ public class ImageViewActivity extends AppCompatActivity {
                 upVotebt.setClickable(true);
                 downVotebt.setClickable(false);
                 vote=-1;
+                downVoteTextView.setText(imageFeatures.getDownVote()+1+"");
             }
         });
 
@@ -137,6 +161,10 @@ public class ImageViewActivity extends AppCompatActivity {
         submitbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(selected==0){
+                    Toast.makeText(getApplicationContext(),"Please select A or B.",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 uploadAB();
                 uploadProfile();
             }
@@ -169,6 +197,9 @@ public class ImageViewActivity extends AppCompatActivity {
         myDatabaseRef.child("current").child(imageFeatures.getUuid()).setValue(newImageFeatures);
 
     }
+
+
+
     private void uploadProfile(){
         ProfileFeatures newProfile=profileFeatures;
         if(selected==0)return;
@@ -189,5 +220,143 @@ public class ImageViewActivity extends AppCompatActivity {
         }
         myDatabaseRef.child("users").child(user.getDisplayName()).setValue(newProfile);
         finish();
+       // new SendVotes().execute();
+    }
+
+
+    private class SendVotes extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(Constants.NGROK_POST_SELECT);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("POST");
+                OutputStream os=urlConnection.getOutputStream();
+
+                DataOutputStream wr = new DataOutputStream(os);
+
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("select" ,selected+"" );
+
+                    wr.writeBytes(obj.toString());
+                    Log.i("JSON Input", obj.toString());
+                    wr.flush();
+                    wr.close();
+                    os.close();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+
+                int responseCode = urlConnection.getResponseCode();
+                Log.i("RsponseCode", "is "+responseCode);
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    String server_response = readStream(urlConnection.getInputStream());
+                    Log.i("Response",server_response);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            new GetVotes().execute();
+        }
+    }
+
+
+    private class GetVotes extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(Constants.NGROK_GET_SELECT);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("POST");
+                OutputStream os=urlConnection.getOutputStream();
+
+                DataOutputStream wr = new DataOutputStream(os);
+
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("post" ,user.getEmail() );
+
+                    wr.writeBytes(obj.toString());
+                    Log.i("JSON Input", obj.toString());
+                    wr.flush();
+                    wr.close();
+                    os.close();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+
+                int responseCode = urlConnection.getResponseCode();
+                Log.i("RsponseCode", "is "+responseCode);
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    String server_response = readStream(urlConnection.getInputStream());
+                    Log.i("Response",server_response);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+
+    public static String readStream(InputStream in) {
+        BufferedReader reader = null;
+        StringBuffer response = new StringBuffer();
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return response.toString();
     }
 }
