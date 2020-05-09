@@ -16,6 +16,15 @@
         android:layout_height="wrap_content"
         android:text="You Have Already Submitted"
         android:gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="50dp"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click on the image to select"
+        android:gravity="center"/>
     <LinearLayout
         android:gravity="center"
         android:orientation="vertical"
