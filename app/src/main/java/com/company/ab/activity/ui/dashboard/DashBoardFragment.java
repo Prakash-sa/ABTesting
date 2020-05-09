@@ -28,11 +28,17 @@ import com.anychart.enums.LegendLayout;
 import com.company.ab.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DashBoardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private DashBoardViewModel mViewModel;
+    private HashMap<String, ArrayList<Integer>> map = new HashMap<>();
+    private AnyChartView anyChartView;
+    private int a = 1;
+    private int b = 3;
+    private Pie pie;
 
     public static DashBoardFragment newInstance() {
         return new DashBoardFragment();
@@ -42,9 +48,9 @@ public class DashBoardFragment extends Fragment implements AdapterView.OnItemSel
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.dash_board_fragment, container, false);
-        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+        anyChartView = root.findViewById(R.id.any_chart_view);
         anyChartView.setProgressBar(root.findViewById(R.id.progress_bar));
-        Pie pie = AnyChart.pie();
+        pie = AnyChart.pie();
         pie.background().fill("#E55B3C");
         pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
             @Override
@@ -52,11 +58,52 @@ public class DashBoardFragment extends Fragment implements AdapterView.OnItemSel
                 Toast.makeText(getActivity(), event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
             }
         });
+        setupChart();
+        Spinner spin = root.findViewById(R.id.spinner);
+        spin.setOnItemSelectedListener(this);
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Tweet");
+        ArrayList<Integer> temp = new ArrayList<>();
+        temp.add(1);
+        temp.add(3);
+        map.put("Tweet", temp);
+        temp = new ArrayList<>();
+        temp.add(5);
+        temp.add(3);
+        categories.add("New Style");
+        map.put("New Style", temp);
+        temp = new ArrayList<>();
+        temp.add(8);
+        temp.add(6);
+        categories.add("Icon change");
+        map.put("Icon change",temp);
+        //Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categories);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+        return root;
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+        ArrayList<Integer> list = map.get(item);
+        a = list.get(0);
+        b = list.get(1);
+        setupChart();
+        // Showing selected spinner ite
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+
+    private void setupChart(){
         List<DataEntry> data = new ArrayList<>();
-        ValueDataEntry version1 = new ValueDataEntry("Version 1", 30);
+        ValueDataEntry version1 = new ValueDataEntry("Version 1", a);
         data.add(version1);
-        ValueDataEntry version2 = new ValueDataEntry("Version 2", 60);
+        ValueDataEntry version2 = new ValueDataEntry("Version 2", b);
         data.add(version2);
         pie.data(data);
         pie.labels().fontColor("#ffffff");
@@ -74,34 +121,7 @@ public class DashBoardFragment extends Fragment implements AdapterView.OnItemSel
                 .position("center-bottom")
                 .itemsLayout(LegendLayout.HORIZONTAL)
                 .align(Align.CENTER);
-
-
         anyChartView.setChart(pie);
-        Spinner spin = root.findViewById(R.id.spinner);
-        spin.setOnItemSelectedListener(this);
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
-        //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categories);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(aa);
-        return root;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

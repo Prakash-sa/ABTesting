@@ -11,38 +11,43 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_margin="20dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerview_current"
-        android:scrollbars="vertical"
-        android:background="@color/white"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/senbold"
+            android:gravity="center_horizontal"
+            android:text="Ongoing"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scrollbars="vertical" />
 
 
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Result"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_margin="20dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerview_result"
-        android:scrollbars="vertical"
-        android:background="@color/white"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/senbold"
+            android:gravity="center_horizontal"
+            android:text="Completed"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
 
 </ScrollView>
