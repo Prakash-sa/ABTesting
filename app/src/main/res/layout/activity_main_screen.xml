@@ -16,13 +16,13 @@
     <com.shrikanthravi.customnavigationdrawer2.widget.SNavigationDrawer
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navigationDrawerBackgroundColor="@android:color/white"
-        app:appbarTitleTextColor="@android:color/white"
-        app:HamMenuIconTintColor="@android:color/white"
-        app:appbarColor="@color/colorPrimary"
+        app:navigationDrawerBackgroundColor="@color/white"
+        app:appbarTitleTextColor="@color/black"
+        app:HamMenuIconTintColor="@color/textcolor"
+        app:appbarColor="@color/white"
         app:primaryMenuItemTextColor="@android:color/black"
         app:secondaryMenuItemTextColor="@android:color/black"
-        app:appbarTitleTextSize="7sp"
+        app:appbarTitleTextSize="10sp"
         app:primaryMenuItemTextSize="7sp"
         app:secondaryMenuItemTextSize="7sp"
         android:id="@+id/navigationDrawer">

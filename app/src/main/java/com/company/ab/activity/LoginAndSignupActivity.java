@@ -33,23 +33,24 @@ public class LoginAndSignupActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 234;
 
-    private Button googlebt,emailbt,skipbt;
-    private TextView termsbt,privacybt,contentbt;
+    private Button googlebt, emailbt, skipbt;
+    private TextView termsbt, privacybt, contentbt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_and_signup);
-        termsbt=findViewById(R.id.termsbtid);
-        privacybt=findViewById(R.id.privacybtid);
-        contentbt=findViewById(R.id.contentbtid);
-        googlebt=findViewById(R.id.googlesigupid);
-      //  emailbt=findViewById(R.id.emailid);
-        skipbt=findViewById(R.id.skipid);
+        termsbt = findViewById(R.id.termsbtid);
+        privacybt = findViewById(R.id.privacybtid);
+        contentbt = findViewById(R.id.contentbtid);
+        googlebt = findViewById(R.id.googlesigupid);
+        //  emailbt=findViewById(R.id.emailid);
+        skipbt = findViewById(R.id.skipid);
 
         skipbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginAndSignupActivity.this,MainActivity.class));
+                startActivity(new Intent(LoginAndSignupActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -83,24 +84,24 @@ public class LoginAndSignupActivity extends AppCompatActivity {
         termsbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginAndSignupActivity.this,TermsServiceActivity.class);
-                intent.putExtra("title","Terms of Service");
+                Intent intent = new Intent(LoginAndSignupActivity.this, TermsServiceActivity.class);
+                intent.putExtra("title", "Terms of Service");
                 startActivity(intent);
             }
         });
         privacybt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginAndSignupActivity.this,TermsServiceActivity.class);
-                intent.putExtra("title","Privacy Policy");
+                Intent intent = new Intent(LoginAndSignupActivity.this, TermsServiceActivity.class);
+                intent.putExtra("title", "Privacy Policy");
                 startActivity(intent);
             }
         });
         contentbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginAndSignupActivity.this,TermsServiceActivity.class);
-                intent.putExtra("title","Content Policy");
+                Intent intent = new Intent(LoginAndSignupActivity.this, TermsServiceActivity.class);
+                intent.putExtra("title", "Content Policy");
                 startActivity(intent);
             }
         });
@@ -138,7 +139,7 @@ public class LoginAndSignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(LoginAndSignupActivity.this,MainActivity.class));
+                            startActivity(new Intent(LoginAndSignupActivity.this, MainActivity.class));
                             finish();
                             Toast.makeText(LoginAndSignupActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
                         } else {

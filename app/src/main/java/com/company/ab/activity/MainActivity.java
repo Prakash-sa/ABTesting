@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.company.ab.R;
+import com.company.ab.activity.ui.dashboard.DashBoardFragment;
 import com.company.ab.activity.ui.gallery.GalleryFragment;
 import com.company.ab.activity.ui.home.HomeFragment;
 import com.company.ab.activity.ui.leaderboard.LeaderBoardFragment;
@@ -88,13 +89,14 @@ public class MainActivity extends AppCompatActivity {
         sNavigationDrawer = findViewById(R.id.navigationDrawer);
 
         List<MenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem("Dashboard", R.drawable.third));
         menuItems.add(new MenuItem("Home",R.drawable.third));
         menuItems.add(new MenuItem("Gallery",R.drawable.third));
         menuItems.add(new MenuItem("LeaderBoard",R.drawable.third));
         menuItems.add(new MenuItem("SignOut",R.drawable.third));
 
         sNavigationDrawer.setMenuItemList(menuItems);
-        fragmentClass =  HomeFragment.class;
+        fragmentClass =  DashBoardFragment.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -113,18 +115,22 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (position){
                     case 0:{
-                        fragmentClass = HomeFragment.class;
+                        fragmentClass = DashBoardFragment.class;
                         break;
                     }
                     case 1:{
-                        fragmentClass = GalleryFragment.class;
+                        fragmentClass = HomeFragment.class;
                         break;
                     }
                     case 2:{
-                        fragmentClass = LeaderBoardFragment.class;
+                        fragmentClass = GalleryFragment.class;
                         break;
                     }
                     case 3:{
+                        fragmentClass = LeaderBoardFragment.class;
+                        break;
+                    }
+                    case 4:{
                         mAuth.signOut();
                         startActivity(new Intent(MainActivity.this,LoginAndSignupActivity.class));
                         finish();
