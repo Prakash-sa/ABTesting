@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.company.ab.R;
 import com.company.ab.activity.CalendarActivity;
 import com.company.ab.database.ImageFeatures;
+import com.company.ab.helper.CalendarViewHelper;
 import com.company.ab.views.RoundedIconButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,7 +53,9 @@ public class HomeFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView lastDateTextView;
 
+
     private int last_date=-1;
+    private String dateStr;
 
     private Uri filePath1,filePath2;
     private String fileStoragePath1,fileStoragePath2;
@@ -83,12 +86,6 @@ public class HomeFragment extends Fragment {
         lastDateTextView=root.findViewById(R.id.date_id);
         image1Request=false;
 
-        String lastdatestring=getActivity().getIntent().getStringExtra("date");
-        if(lastdatestring!=null){
-            last_date=getActivity().getIntent().getIntExtra("intdate",-1);
-            lastDateTextView.setText(lastdatestring);
-            lastDateTextView.setVisibility(View.VISIBLE);
-        }
 
         image1_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +107,8 @@ public class HomeFragment extends Fragment {
         calendar_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(new Intent(getContext(), CalendarActivity.class));
+                Intent intent=new Intent(getContext(), CalendarActivity.class);
+                getContext().startActivity(intent);
             }
         });
 
@@ -239,5 +237,11 @@ public class HomeFragment extends Fragment {
         return imageFeatures;
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(CalendarViewHelper.last_date>1000000){
+            lastDateTextView.setText(CalendarViewHelper.date);
+        }
+    }
 }
